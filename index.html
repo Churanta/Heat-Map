@@ -18,19 +18,50 @@
     <script>
         var map, pointArray, heatMap;
 
-        var roadData = [
-            new google.maps.LatLng(12.9716, 77.5946),
-            new google.maps.LatLng(12.9717, 77.5947),
-            new google.maps.LatLng(12.9718, 77.5948), 
-            new google.maps.LatLng(12.9719, 77.5946), 
-            new google.maps.LatLng(12.9720, 77.5949), 
-            new google.maps.LatLng(12.9721, 77.5950),
-            new google.maps.LatLng(12.9722, 77.5951), // Bangalore
-            new google.maps.LatLng(12.9723, 77.5952),
-            new google.maps.LatLng(12.9724, 77.5953),
-            new google.maps.LatLng(12.9725, 77.5954),
-            new google.maps.LatLng(12.9726, 77.5955),
-
+        var dynamicCoordinates = [{
+                lat: 12.9716,
+                lng: 77.5946
+            },
+            {
+                lat: 12.9717,
+                lng: 77.5947
+            },
+            {
+                lat: 12.9718,
+                lng: 77.5948
+            },
+            {
+                lat: 12.9719,
+                lng: 77.5946
+            },
+            {
+                lat: 12.9720,
+                lng: 77.5949
+            },
+            {
+                lat: 12.9721,
+                lng: 77.5950
+            },
+            {
+                lat: 12.9722,
+                lng: 77.5951
+            }, // Bangalore
+            {
+                lat: 12.9723,
+                lng: 77.5952
+            },
+            {
+                lat: 12.9724,
+                lng: 77.5953
+            },
+            {
+                lat: 12.9725,
+                lng: 77.5954
+            },
+            {
+                lat: 12.9726,
+                lng: 77.5955
+            }
             // Add more LatLng points here
         ];
 
@@ -42,6 +73,10 @@
             };
 
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            var roadData = dynamicCoordinates.map(function (coord) {
+                return new google.maps.LatLng(coord.lat, coord.lng);
+            });
 
             var pointArray = new google.maps.MVCArray(roadData);
 
