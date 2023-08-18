@@ -18,52 +18,89 @@
     <script>
         var map, pointArray, heatMap;
 
-        var dynamicCoordinates = [{
-                lat: 12.9716,
-                lng: 77.5946
+        // Function to generate dynamic coordinates
+        function generateDynamicCoordinates() {
+            var dynamicCoordinates = [
+            {
+            lat: 12.9716,
+            lng: 77.5946,
+            value: 6 // Set the value for this point
             },
             {
-                lat: 12.9717,
-                lng: 77.5947
+            lat: 12.9717,
+            lng: 77.5947,
+            value: 11 // Set the value for this point
             },
             {
-                lat: 12.9718,
-                lng: 77.5948
+            lat: 12.9718,
+            lng: 77.5948,
+            value: 15 // Set the value for this point
             },
             {
-                lat: 12.9719,
-                lng: 77.5946
+            lat: 12.9719,
+            lng: 77.5946,
+            value: 18 // Set the value for this point
             },
             {
-                lat: 12.9720,
-                lng: 77.5949
+            lat: 12.9720,
+            lng: 77.5949,
+            value: 25 // Set the value for this point
             },
             {
-                lat: 12.9721,
-                lng: 77.5950
+            lat: 12.9721,
+            lng: 77.5950,
+            value: 30 // Set the value for this point
             },
             {
-                lat: 12.9722,
-                lng: 77.5951
+            lat: 12.9722,
+            lng: 77.5951,
+            value: 35 // Set the value for this point
             }, // Bangalore
             {
-                lat: 12.9723,
-                lng: 77.5952
+            lat: 12.9723,
+            lng: 77.5952,
+            value: 40 // Set the value for this point
             },
             {
-                lat: 12.9724,
-                lng: 77.5953
+            lat: 12.9724,
+            lng: 77.5953,
+            value: 45 // Set the value for this point
             },
             {
-                lat: 12.9725,
-                lng: 77.5954
+            lat: 12.9725,
+            lng: 77.5954,
+            value: 50 // Set the value for this point
             },
             {
-                lat: 12.9726,
-                lng: 77.5955
+            lat: 12.9726,
+            lng: 77.5955,
+            value: 55 // Set the value for this point
+            },
+            {
+            lat: 12.9927,
+            lng: 77.5956,
+            value: 60 // Set the value for this point
+            },
+
+            {
+            lat: 12.9929,
+            lng: 77.5959,
+            value: 61 // Set the value for this point
+            }];
+
+            // Add your dynamic latitude and longitude generation logic here
+            // For example, you can generate random coordinates within a certain range
+            for (var i = 0; i < 10; i++) {
+                var lat = 12.9716 + (Math.random() - 0.5) * 0.01;
+                var lng = 77.5946 + (Math.random() - 0.5) * 0.01;
+                dynamicCoordinates.push({
+                    lat: lat,
+                    lng: lng
+                });
             }
-            // Add more LatLng points here
-        ];
+
+            return dynamicCoordinates;
+        }
 
         function initialize() {
             var mapOptions = {
@@ -73,6 +110,8 @@
             };
 
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            var dynamicCoordinates = generateDynamicCoordinates();
 
             var roadData = dynamicCoordinates.map(function (coord) {
                 return new google.maps.LatLng(coord.lat, coord.lng);
