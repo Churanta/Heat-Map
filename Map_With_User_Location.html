@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Heatmap</title>
+
+    <style>
+        html,
+        body,
+        #map-canvas {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization"></script>
+    <script>
+        var map, pointArray, heatMap;
+
+        // Define your dynamic data with latitude, longitude, value, and temperature
+        var dynamicData = [{
+                lat: 12.9716,
+                lng: 77.5946,
+                value: 50,
+                temperature: 75
+            },
+            {
+                lat: 12.9717,
+                lng: 77.5947,
+                value: 30,
+                temperature: 90
+            },
+            {
+                lat: 12.9718,
+                lng: 77.5948,
+                value: 70,
+                temperature: 110
+            },
+            {
+                lat: 12.9719,
+                lng: 77.5946,
+                value: 25,
+                temperature: 40
+            },
+            {
+                lat: 12.9720,
+                lng: 77.5949,
+                value: 60,
+                temperature: 70
+            },
+            {
+                lat: 12.9721,
+                lng: 77.5950,
+                value: 40,
+                temperature: 60
+            },
+            {
+                lat: 12.9722,
+                lng: 77.5951,
+                value: 80,
+                temperature: 130
+            },
+            {
+                lat: 12.9723,
+                lng: 77.5952,
+                value: 20,
+                temperature: 30
+            },
+            {
+                lat: 12.9724,
+                lng: 77.5953,
+                value: 90,
+                temperature: 120
+            },
+            {
+                lat: 12.9725,
+                lng: 77.5954,
+                value: 10,
+                temperature: 20
+            },
+            {
+                lat: 12.9726,
+                lng: 77.5955,
+                value: 45,
+                temperature: 80
+            },
+            {
+                lat: 12.9927,
+                lng: 77.5956,
+                value: 70,
+                temperature: 100
+            },
+            {
+                lat: 12.9929,
+                lng: 77.5959,
+                value: 50,
+                temperature: 70
+            },
+            // Your existing data points here
+        ];
+
+        function initialize() {
+            var mapOptions = {
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.SATELLITE
+            };
+
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            // Get the user's location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords
+                        .longitude);
+
+                    // Create a marker for the user's location
+                    var userMarker = new google.maps.Marker({
+                        position: userLatLng,
+                        map: map,
+                        title: "Your Location"
+                    });
+
+                    map.setCenter(userLatLng);
+
+                    // Add the user marker to the heatmap data
+                    dynamicData.push({
+                        lat: userLatLng.lat(),
+                        lng: userLatLng.lng(),
+                        value: 100, // You can set a value for the user's location
+                        temperature: 75 // You can set a temperature for the user's location
+                    });
+
+                    // Create the heatmap
+                    var heatMapData = dynamicData
+                        .filter(function (data) {
+                            return data.temperature > data.value;
+                        })
+                        .map(function (data) {
+                            return {
+                                location: new google.maps.LatLng(data.lat, data.lng),
+                                weight: 1
+                            };
+                        });
+
+                    heatMap = new google.maps.visualization.HeatmapLayer({
+                        data: heatMapData,
+                        radius: 20 // Adjust the radius here (larger value for a bigger radius)
+                    });
+                    heatMap.setMap(map);
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+</head>
+
+<body>
+    <div id="map-canvas"></div>
+</body>
+
+</html>
